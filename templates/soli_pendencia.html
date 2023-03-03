@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt_br">
+    <head>
+        <title>Pagina Inicial</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+        <script src="script_cotacao_pedido.js" defer></script>
+        <link rel="stylesheet" href="{{url_for('static',filename='style.css') }}">
+    </head>
+    <body>
+    <img src="{{url_for('static', filename='logo-color.png')}}">
+    <button class="buttonLogin" onclick="window.location.href='http://127.0.0.1:5000/login'">Entrar</button>
+    <div style="position:relative">
+        <div class="divSoli_Pendencia">
+            <label for="colocar" class="label"><strong>Preencha o Formulário</strong></label>
+            <form id="colocar" enctype="multipart/form-data" method="post">
+                <input placeholder="Nome:" type="text" id="nome" name="nome"style="width:390px" required="required">
+                <input placeholder="Setor:" type="text" name="setor"style="width:390px" required="required">
+                <input placeholder="PA:" type="text" name="PA"style="width:390px" required="required">
+                <input placeholder="Motivo:" type="text" name="motivo"style="width:390px" required="required">
+                <input placeholder="Solicitação:" type="text" name="solicitacao"style="width:390px" required="required">
+                <input placeholder="Valor:" type="text" name="valor"style="width:390px" required="required">
+                <input type="file" name="arquivo" id="arquivo" required="required">
+                <input type="submit" value="enviar" id="enviar"style="position:relative;left:41.5%">
+            </form>
+        </div>
+    </div>
+    </body>
+</html>

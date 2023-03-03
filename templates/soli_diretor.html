@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css') }}">
+    <title>Diretor</title>
+</head>
+<body>
+<img src="static/logo-color.png" style="margin-top:20px">
+<div class="alert"></div>
+<div class="nav"><p id="diretoria"></p></div>
+<script>
+async function  getPedidos(){
+    const response = await axios.get('http://127.0.0.1:5000/solicitacao/pendencias/diretoria')
+    const pedidos = response.data
+    const final = document.getElementById('diretoria')
+    const divAbs = document.createElement('div')
+    divAbs.className='divAbs'
+
+    pedidos.forEach(element => {
+
+        const newDiv = document.createElement('div')
+        newDiv.className = "divPedidos"
+
+        final.appendChild(newDiv)
+
+        const varNome = document.createElement('p')
+
+        newDiv.appendChild(varNome)
+
+        varNome.innerHTML=`
+            <h3>ID: ${element.id}</h3>
+            <h4>Tipo: Solicitação</h4>
+            <p>Nome: ${element.nome}</p>
+            <p>Setor: ${element.setor}</p>
+            <p>PA: ${element.PA}</p>
+            <p>Motivo: ${element.motivo}</p>
+            <p>Solicitação: ${element.solicitacao} Valor: ${element.valor}</p>
+        `
+                const file = document.createElement('button')
+                file.onclick=function(){window.open(`http://127.0.0.1:5000/uploads/Solicitacao-${element.nome}.pdf`,'_blank')}
+                file.innerText="Arquivo para Assinatura"
+                file.className="buttonFile"
+                newDiv.appendChild(file)
+
+                const agree = document.createElement('button')
+                agree.onclick=function(){alertinhaA("Aprovado")
+                window.location.href=`http://127.0.0.1:5000/pedido/solicitacao/aprovado/diretor/${element.id}`}
+                agree.innerText="Aprovar"
+                agree.className="buttonAprovar"
+                newDiv.appendChild(agree)
+
+                const dgree = document.createElement('button')
+                dgree.onclick=function(){alertinhaR("Reprovado")
+                window.location.href=`http://127.0.0.1:5000/pedido/solicitacao/reprovado/diretoria/${element.id}`}
+                dgree.innerText="Reprovar"
+                dgree.className='buttonReprovar'
+                newDiv.appendChild(dgree)
+    })
+}
+
+function alertinhaA(msg){
+    const divMessage= document.querySelector('.alert');
+
+    const message = document.createElement('div')
+    message.className='messageA'
+    message.innerText=msg
+    divMessage.appendChild(message)
+
+    setTimeout(()=>{
+        message.style.display='none'},3000)
+}
+function alertinhaR(msg){
+    const divMessage= document.querySelector('.alert');
+
+    const message = document.createElement('div')
+    message.className='messageR'
+    message.innerText=msg
+    divMessage.appendChild(message)
+
+    setTimeout(()=>{
+        message.style.display='none'},3000)
+}
+getPedidos()
+</script>
+</body>
+</html>

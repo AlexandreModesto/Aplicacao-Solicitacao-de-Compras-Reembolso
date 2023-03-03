@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Página Inicial</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+</head>
+<body>
+<img src="{{url_for('static', filename='logo-color.png')}}">
+<button class="buttonLogin" onclick="window.location.href='http://127.0.0.1:5000/login'">Entrar</button>
+<button class="buttonFase2" onclick="window.location.href='http://127.0.0.1:5000/solicitacao/atualizar'">Fase 2</button>
+<div class="divIndex">
+    <button class="BUTTON_NMN" onclick="window.location.href = 'http://127.0.0.1:5000/cotacao/pedido'">Cotação</button><br>
+    <br>
+    <button class="BUTTON_NMN" onclick="window.location.href = 'http://127.0.0.1:5000/solicitacao/pedido'">Solicitação</button><br>
+    <br>
+    <button class="BUTTON_NMN" onclick="window.location.href = 'http://127.0.0.1:5000/reembolso/pedido'">Reembolso</button><br>
+</div>
+</body>
+</html>

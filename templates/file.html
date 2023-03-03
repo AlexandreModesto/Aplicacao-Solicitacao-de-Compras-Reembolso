@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    <title>Arquivo Assinado</title>
+</head>
+<body>
+<img src="{{url_for('static', filename='logo-color.png')}}" style="margin-top:20px">
+<div class="nav">
+    <div class="divFile">
+        <p style="font-size:30px"><strong> ⬇ Arraste aqui o PDF assinado!</strong></p>
+        <form method="post" enctype=multipart/form-data>
+            <input type="file" name="file" style="width:400px; height:300px">
+            <input type="submit" value="Enviar" id="submit">
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt_br">
+    <head>
+        <title>Pagina Inicial</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+        <link rel="stylesheet" href="{{url_for('static',filename='style.css') }}">
+    </head>
+    <body>
+    <img src="{{url_for('static', filename='logo-color.png')}}">
+    <button class="buttonLogin" onclick="window.location.href='http://127.0.0.1:5000/login'">Entrar</button>
+    <div style="position:relative">
+    <div class="divCota_Pendencia">
+        <label for="colocar" class="label"><strong>Preencha o Formulário</strong></label>
+        <button id="btnAdd" class="addop">+</button>
+        <form id="colocar" method='post' enctype=multipart/form-data>
+            <input style="width:366px" type="email" name="email" required="required" placeholder="Digite seu email:">
+            <input type="text" id="nome" name="nome" required="required" placeholder="Nome:" style="width:390px"><br>
+            <input style="width:366px" type="text" name="setor" required="required" placeholder="Setor:" style="width:390px">
+            <input type="text" name="PA" required="required" placeholder="PA:" style="width:390px"><br>
+            <textarea style="margin-top:20px;font-family: Courier New" type="text" name="motivo" required="required" cols="79" placeholder="Descreva aqui o motivo"></textarea><br>
+            <input style="width:366px" type="text" name="solicitacao1" required="required" placeholder="Solicitação:" style="width:390px">
+            <input type="number" name="valor1" required="required" placeholder="Valor:" style="width:390px"><br>
+            <input style="width:366px" type="text" name="solicitacao2" required="required" placeholder="Solicitação:" style="width:390px">
+            <input type="number" name="valor2" required="required" placeholder="Valor:" style="width:390px"><br>
+            <input id="visibi_soli1" style="display:none;width:366px" type="text" name="solicitacao3" placeholder="Solicitação:">
+            <input id="visibi_valor1" type="number" style="display:none;width:390px" name="valor3" placeholder="Valor:"><br>
+            <input id="visibi_soli2" style="display:none;width:366px" type="text" name="solicitacao4" placeholder="Solicitação:">
+            <input id="visibi_valor2" style="display:none;width:390px" type="number" name="valor4" placeholder="Valor:"><br>
+
+            <input type=file name=file required="required">
+            <input type=submit value=Enviar style="position:relative;left:40%">
+        </form>
+
+    </div>
+    </div>
+    <script>
+
+var countBtn = 0
+const add = document.getElementById('btnAdd')
+btnAdd.addEventListener('click',()=>{
+    countBtn++
+    if (countBtn ===1){
+        document.getElementById('visibi_soli1').style.display='inline',
+        document.getElementById('visibi_valor1').style.display='inline'
+    }else{
+        document.getElementById('visibi_soli2').style.display='inline',
+        document.getElementById('visibi_valor2').style.display='inline'
+        add.style.display='none'}})
+
+    </script>
+    </body>
+</html>

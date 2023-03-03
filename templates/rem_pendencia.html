@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+        <link rel="stylesheet" href="{{url_for('static',filename='style.css') }}">
+        <title>Gestor</title>
+    </head>
+    <body>
+        <img src="{{url_for('static', filename='logo-color.png')}}">
+        <button class="buttonLogin" onclick="window.location.href='http://127.0.0.1:5000/login'">Entrar</button>
+        <div style="position:relative">
+        <div class="divRem_Pendencia">
+        <label for="colocar" class="label"><strong>Preencha o Formulário</strong></label>
+        <form id="colocar">
+            <input type="text" name="email" placeholder="Digite seu email:" style="width:393px">
+            <input type="text" id="nome" name="nome" placeholder="Nome:" style="width:390px"><br>
+            <input type="text" id="setor" name="setor" placeholder="Setor:" style="width:393px">
+            <input type="text" id="PA" name="PA" placeholder="PA:" style="width:390px"><br>
+            <input type="text" id="valor" name="valor" placeholder="Valor:" style="width:397px"><br>
+            <textarea name="descricao" id="descricao" cols="47" rows="5" placeholder="Descrição dos itens:" style="margin-top:20px"></textarea>
+            <textarea name="motivo" id="motivo" cols="47" rows="5" placeholder="Motivo:"></textarea><br>
+            <textarea name="destino" id="destino" cols="47" rows="3" placeholder="Destino:" style="margin-top:20px"></textarea><br>
+            <input type="file" name="file" id="file" style="width:397px">
+            <input type="submit" value="enviar" id="enviar" style="position:absolute;right:3%">
+        </form>
+    </body>
+</html>

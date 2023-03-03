@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css') }}">
+    <title>Financeiro</title>
+</head>
+<body>
+<img src="{{url_for('static', filename='logo-color.png')}}" style="margin-top:20px">
+<div class="alert"></div>
+    <form id="finalizar" method="put" enctype="multipart/form-data" style="padding-left:5%">
+        <p style="font-family:Courier New;font-size:20px;">Coloque o ID </p>
+        <input type="number" name="id_pedido_soli" id="id_pedido_soli">
+        <p style="font-family:Courier New;font-size:20px;">Data que Foi Realizado o Pagamento </p>
+        <input type="date" name="pagamento_final" id="pagamento_final"><br>
+        <p></p>
+        <textarea id="obs" rows="5" cols="50" placeholder="Coloque as demais observações" style="margin-top:20px;font-family: Courier New"></textarea><br>
+        <input type="submit" value="enviar" class="buttonFinanEnv">
+    </form>
+<div class="nav">
+<p id="final"></p>
+</div>
+</body>
+<script>
+    async function  getPedidos(){
+    const response = await axios.get('http://127.0.0.1:5000/financeiro')
+    const pedidos = response.data
+    const final = document.getElementById('final')
+    const divAbs = document.createElement('div')
+    divAbs.className='divAbs'
+
+    pedidos.forEach(element => {
+
+        const newDiv = document.createElement('div')
+        newDiv.className = "divPedidos"
+
+        final.appendChild(newDiv)
+
+        const varNome = document.createElement('p')
+
+        newDiv.appendChild(varNome)
+
+
+        if (element.categoria == "Solicitação"){
+            let a = [{day: 'numeric'}, {month: 'numeric'}, {year: 'numeric'}];
+            let dates = converter_data(new Date(element['data de pagamento']), a, '-');
+            varNome.innerHTML=`
+                <h3>ID: ${element.id}</h3>
+                <h4>Tipo: ${element.categoria}</h4>
+                <p>Nome: ${element.nome}</p>
+                <p>Setor: ${element.setor}</p>
+                <p>PA: ${element.PA}</p>
+                <p>Motivo: ${element.motivo}</p>
+                <p>Solicitação: ${element.solicitacao}</p>
+                <p>Valor: ${element.valor}</p>
+                <p>Tipo de Pagamento: ${element.tipo}</p>
+                <p>Data Pagamento: ${dates}</p>
+                <p>Informações adicionais: ${element.info}</p>
+            `}else{
+                varNome.innerHTML=`
+                <h3>ID: ${element.id}</h3>
+                <h4>Tipo: ${element.categoria}</h4>
+                <p>Nome: ${element.nome}</p>
+                <p>Setor: ${element.setor}</p>
+                <p>PA: ${element.PA}</p>
+                <p>Motivo: ${element.motivo}</p>
+                <p>Descrição: ${element.descricao}</p>
+                <p>Destino: ${element.destino}</p>
+                <p>Valor: ${element.valor}</p>
+            `
+            }
+                const file = document.createElement('button')
+                file.onclick=function(){window.open(`http://127.0.0.1:5000/uploads/Cotacao-Nome-${element.nome}-Valor1-${element.valor1}-Valor2-${element.valor2}.pdf`,'_blank')}
+                file.innerText="Comprovante"
+                file.className="buttonFile"
+                file.style.width = '400px'
+                newDiv.appendChild(file)
+    })
+}
+function alertinhaA(msg){
+    const divMessage= document.querySelector('.alert');
+
+    const message = document.createElement('div')
+    message.className='messageA'
+    message.innerText=msg
+    divMessage.appendChild(message)
+
+    setTimeout(()=>{
+        message.style.display='none'},3000)
+}
+function converter_data(t, a, s) {
+    function format(m) {
+       let f = new Intl.DateTimeFormat('en', m);
+       return f.format(t);
+    }
+    return a.map(format).join(s);
+ }
+getPedidos()
+</script>
+</html>

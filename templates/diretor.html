@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=10, minimum-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    <title>Diretor</title>
+</head>
+<body>
+<img src="{{url_for('static', filename='logo-color.png')}}" style="margin-top:20px">
+<div class="alert"></div>
+<div class="nav">
+    <p id="final"></p>
+</div>
+<script>
+async function  getPedidos(){
+    const response = await axios.get('http://127.0.0.1:5000/cotacao/pendencias/diretoria')
+    const pedidos = response.data
+    const final = document.getElementById('final')
+    const divAbs = document.createElement('div')
+    divAbs.className='divAbs'
+
+    pedidos.forEach(element => {
+
+        const newDiv = document.createElement('div')
+        newDiv.className='divPedidos'
+
+        final.appendChild(newDiv)
+
+        const varNome = document.createElement('p')
+
+        newDiv.appendChild(varNome)
+        varNome.innerHTML=`
+            <h3>ID: ${element.id}</h3>
+            <h4>Tipo: Cotação</h4>
+            <p>Nome: ${element.nome}</p>
+            <p>Setor: ${element.setor}</p>
+            <p>PA: ${element.PA}</p>
+            <p>Motivo: ${element.motivo}</p>
+        `
+        if (element.valor4 != null){
+            if (element.valor1 < element.valor2 && element.valor1 < element.valor4){
+                const a = document.createElement('p')
+                a.innerHTML=`
+                <input type="radio" name="group${element.id}" id="opt_1" checked value=["${element.solicitacao1},${element.valor1}"]>
+                <label for="opt_1">Soliciatção 1: ${element.solicitacao1} Valor 1: ${element.valor1}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_2" value=["${element.solicitacao2},${element.valor2}"]>
+                <label for="opt_2">Solicitação 2: ${element.solicitacao2} Valor 2: ${element.valor2}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_3" value=["${element.solicitacao3},${element.valor3}"] >
+                <label for="opt_3">Solicitação 3: ${element.solicitacao3} Valor 3: ${element.valor3}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_4" value=["${element.solicitacao4},${element.valor4}"]>
+                <label for="opt_4">Solicitação 4: ${element.solicitacao4} Valor 4: ${element.valor4}</label><br>
+                <input type="radio" name"res" id="opt_res${element.id}" value=${element.valor1} style="display : none">
+                <input type="radio" name"res" id="opt_res${element.id}" checked value=${element.solicitacao1} style="display : none">
+                `
+                varNome.appendChild(a)
+
+            }else if (element.valor2 < element.valor1 && element.valor2 < element.valor4){
+                const a = document.createElement('p')
+                a.innerHTML=`
+                <input type="radio" name="group${element.id}" id="opt_1" value=["${element.solicitacao1},${element.valor1}"]>
+                <label for="opt_1">Soliciatção 1: ${element.solicitacao1} Valor 1: ${element.valor1}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_2" checked value=["${element.solicitacao2},${element.valor2}"]>
+                <label for="opt_2">Solicitação 2: ${element.solicitacao2} Valor 2: ${element.valor2}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_3" value=["${element.solicitacao3},${element.valor3}"]>
+                <label for="opt_3">Solicitação 3: ${element.solicitacao3} Valor 3: ${element.valor3}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_4" value=["${element.solicitacao4},${element.valor4}"]>
+                <label for="opt_4">Solicitação 4: ${element.solicitacao4} Valor 4: ${element.valor4}</label><br>
+                <input type="radio" name"res" id="opt_res${element.id}" value=${element.valor2} style="display : none">
+                <input type="radio" name"res" id="opt_res${element.id}" checked value=${element.solicitacao2} style="display : none">
+                `
+                varNome.appendChild(a)
+
+            }else if (element.valor4 < element.valor1 && element.valor4 < element.valor2){
+                const a = document.createElement('p')
+                a.innerHTML=`
+                <input type="radio" name="group${element.id}" id="opt_1" value=["${element.solicitacao1},${element.valor1}"]>
+                <label for="opt_1">Soliciatção 1: ${element.solicitacao1} Valor 1: ${element.valor1}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_2" value=["${element.solicitacao2},${element.valor2}"]>
+                <label for="opt_2">Solicitação 2: ${element.solicitacao2} Valor 2: ${element.valor2}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_3" value=["${element.solicitacao3},${element.valor3}"]>
+                <label for="opt_3">Solicitação 3: ${element.solicitacao3} Valor 3: ${element.valor3}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_4" checked value=["${element.solicitacao4},${element.valor4}"]>
+                <label for="opt_4">Solicitação 4: ${element.solicitacao4} Valor 4: ${element.valor4}</label><br>
+                <input type="radio" name"res" id="opt_res${element.id}" value=${element.valor4} style="display : none">
+                <input type="radio" name"res" id="opt_res${element.id}" checked value=${element.solicitacao4} style="display : none">
+                `
+                varNome.appendChild(a)
+
+
+        }}else if (element.valor3 != null){
+            if (element.valor1 < element.valor2 && element.valor1 < element.valor3){
+                const a = document.createElement('p')
+                a.innerHTML=`
+                <input type="radio" name="group${element.id}" id="opt_1" checked value=["${element.solicitacao1},${element.valor1}"]>
+                <label for="opt_1">Soliciatção 1: ${element.solicitacao1} Valor 1: ${element.valor1}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_2" value=["${element.solicitacao2},${element.valor2}"]>
+                <label for="opt_2">Solicitação 2: ${element.solicitacao2} Valor 2: ${element.valor2}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_3" value=["${element.solicitacao3},${element.valor3}"]>
+                <label for="opt_3">Solicitação 3: ${element.solicitacao3} Valor 3: ${element.valor3}</label><br>
+
+                <input type="radio" name"res" id="opt_res${element.id}" value=${element.valor1} style="display : none">
+                <input type="radio" name"res" id="opt_res${element.id}" checked value=${element.solicitacao1} style="display : none">
+                `
+                varNome.appendChild(a)
+
+            }else if (element.valor2 < element.valor1 && element.valor2 < element.valor3){
+                const a = document.createElement('p')
+                a.innerHTML=`
+                <input type="radio" name="group${element.id}" id="opt_1" value=["${element.solicitacao1},${element.valor1}"]>
+                <label for="opt_1">Soliciatção 1: ${element.solicitacao1} Valor 1: ${element.valor1}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_2" checked value=["${element.solicitacao2},${element.valor2}"]>
+                <label for="opt_2">Solicitação 2: ${element.solicitacao2} Valor 2: ${element.valor2}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_3" value=["${element.solicitacao3},${element.valor3}"]>
+                <label for="opt_3">Solicitação 3: ${element.solicitacao3} Valor 3: ${element.valor3}</label><br>
+
+                <input type="radio" name"res" id="opt_res${element.id}" value=${element.valor2} style="display : none">
+                <input type="radio" name"res" id="opt_res${element.id}" checked value=${element.solicitacao2} style="display : none">
+                `
+                varNome.appendChild(a)
+
+            }else if (element.valor3 < element.valor1 && element.valor3 < element.valor2){
+                const a = document.createElement('p')
+                a.innerHTML=`
+                <input type="radio" name="group${element.id}" id="opt_1" value=["${element.solicitacao1},${element.valor1}"]>
+                <label for="opt_1">Soliciatção 1: ${element.solicitacao1} Valor 1: ${element.valor1}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_2" value=["${element.solicitacao2},${element.valor2}"]>
+                <label for="opt_2">Solicitação 2: ${element.solicitacao2} Valor 2: ${element.valor2}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_3" checked value=["${element.solicitacao3},${element.valor3}"]>
+                <label for="opt_3">Solicitação 3: ${element.solicitacao3} Valor 3: ${element.valor3}</label><br>
+
+                <input type="radio" name"res" id="opt_res${element.id}" value=${element.valor3} style="display : none">
+                <input type="radio" name"res" id="opt_res${element.id}" checked value=${element.solicitacao3} style="display : none">
+                `
+                varNome.appendChild(a)
+
+
+        }}else if (element.valor4 == null && element.valor3 == null){
+            if (element.valor1 < element.valor2){
+                const a = document.createElement('p')
+                a.innerHTML=`
+                <input type="radio" name="group${element.id}" id="opt_1" checked value=["${element.solicitacao1},${element.valor1}"]>
+                <label for="opt_1">Soliciatção 1: ${element.solicitacao1} Valor 1: ${element.valor1}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_2" value=["${element.solicitacao2},${element.valor2}"]>
+                <label for="opt_2">Solicitação 2: ${element.solicitacao2} Valor 2: ${element.valor2}</label><br>
+                <input type="radio" name"res" id="opt_res${element.id}" value=${element.valor1} style="display : none">
+                <input type="radio" name"res" id="opt_res${element.id}" checked value=${element.solicitacao1} style="display : none">
+                `
+                varNome.appendChild(a)
+
+            }else{
+                const a = document.createElement('p')
+                a.innerHTML=`
+                <input type="radio" name="group${element.id}" id="opt_1" value=["${element.solicitacao1},${element.valor1}"]>
+                <label for="opt_1">Soliciatção 1: ${element.solicitacao1} Valor 1: ${element.valor1}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_2" checked value=["${element.solicitacao2},${element.valor2}"]>
+                <label for="opt_2">Solicitação 2: ${element.solicitacao2} Valor 2: ${element.valor2}</label><br>
+                <input type="radio" name"res" id="opt_res${element.id}" value=${element.valor2} style="display : none">
+                <input type="radio" name"res" id="opt_res${element.id}" checked value=${element.solicitacao2} style="display : none">
+                `
+                varNome.appendChild(a)
+        }}else if (element.valor3 != null && element.valor4 != null){
+            if (element.valor1 < element.valor2 && element.valor1 < element.valor3 && element.valor1 < element.valor4){
+                const a = document.createElement('p')
+                a.innerHTML=`
+                <input type="radio" name="group${element.id}" id="opt_1" checked value=["${element.solicitacao1},${element.valor1}"]>
+                <label for="opt_1">Soliciatção 1: ${element.solicitacao1} Valor 1: ${element.valor1}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_2" value=["${element.solicitacao2},${element.valor2}"]>
+                <label for="opt_2">Solicitação 2: ${element.solicitacao2} Valor 2: ${element.valor2}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_3" value=["${element.solicitacao3},${element.valor3}"]>
+                <label for="opt_3">Solicitação 3: ${element.solicitacao3} Valor 3: ${element.valor3}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_4" value=["${element.solicitacao4},${element.valor4}"]>
+                <label for="opt_4">Solicitação 4: ${element.solicitacao4} Valor 4: ${element.valor4}</label><br>
+                <input type="radio" name"res" id="opt_res${element.id}" value=${element.valor1} style="display : none">
+                <input type="radio" name"res" id="opt_res${element.id}" checked value=${element.solicitacao1} style="display : none">
+                `
+                varNome.appendChild(a)
+
+            }else if (element.valor2 < element.valor1 && element.valor2 < element.valor3 && element.valor2 < element.valor4){
+                const a = document.createElement('p')
+                a.innerHTML=`
+                <input type="radio" name="group${element.id}" id="opt_1" value=["${element.solicitacao1},${element.valor1}"]>
+                <label for="opt_1">Soliciatção 1: ${element.solicitacao1} Valor 1: ${element.valor1}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_2" checked value=["${element.solicitacao2},${element.valor2}"]>
+                <label for="opt_2">Solicitação 2: ${element.solicitacao2} Valor 2: ${element.valor2}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_3" value=["${element.solicitacao3},${element.valor3}"]>
+                <label for="opt_3">Solicitação 3: ${element.solicitacao3} Valor 3: ${element.valor3}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_4" value=["${element.solicitacao4},${element.valor4}"]>
+                <label for="opt_4">Solicitação 4: ${element.solicitacao4} Valor 4: ${element.valor4}</label><br>
+                <input type="radio" name"res" id="opt_res${element.id}" value=${element.valor2} style="display : none">
+                <input type="radio" name"res" id="opt_res${element.id}" checked value=${element.solicitacao2} style="display : none">
+                `
+                varNome.appendChild(a)
+
+            }else if (element.valor3 < element.valor1 && element.valor3 < element.valor2 && element.valor3 < element.valor4){
+                const a = document.createElement('p')
+                a.innerHTML=`
+                <input type="radio" name="group${element.id}" id="opt_1" value=["${element.solicitacao1},${element.valor1}"]>
+                <label for="opt_1">Soliciatção 1: ${element.solicitacao1} Valor 1: ${element.valor1}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_2" value=["${element.solicitacao2},${element.valor2}"]>
+                <label for="opt_2">Solicitação 2: ${element.solicitacao2} Valor 2: ${element.valor2}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_3" checked value=["${element.solicitacao3},${element.valor3}"]>
+                <label for="opt_3">Solicitação 3: ${element.solicitacao3} Valor 3: ${element.valor3}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_4" value=["${element.solicitacao4},${element.valor4}"]>
+                <label for="opt_4">Solicitação 4: ${element.solicitacao4} Valor 4: ${element.valor4}</label><br>
+                <input type="radio" name"res" id="opt_res${element.id}" value=${element.valor3} style="display : none">
+                <input type="radio" name"res" id="opt_res${element.id}" checked value=${element.solicitacao3} style="display : none">
+                `
+                varNome.appendChild(a)
+
+            }else{
+                const a = document.createElement('p')
+                a.innerHTML=`
+                <input type="radio" name="group${element.id}" id="opt_1" value=["${element.solicitacao1},${element.valor1}"]>
+                <label for="opt_1">Soliciatção 1: ${element.solicitacao1} Valor 1: ${element.valor1}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_2" value=["${element.solicitacao2},${element.valor2}"]>
+                <label for="opt_2">Solicitação 2: ${element.solicitacao2} Valor 2: ${element.valor2}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_3" value=["${element.solicitacao3},${element.valor3}"]>
+                <label for="opt_3">Solicitação 3: ${element.solicitacao3} Valor 3: ${element.valor3}</label><br>
+                <input type="radio" name="group${element.id}" id="opt_4" checked value=["${element.solicitacao4},${element.valor4}"]>
+                <label for="opt_4">Solicitação 4: ${element.solicitacao4} Valor 4: ${element.valor4}</label><br>
+                <input type="radio" name"res" id="opt_res${element.id}" value=${element.valor4} style="display : none">
+                <input type="radio" name"res" id="opt_res${element.id}" checked value=${element.solicitacao4} style="display : none">
+                `
+                varNome.appendChild(a)
+
+        }}
+        const file = document.createElement('button')
+        file.onclick=function(){window.open(`http://127.0.0.1:5000/uploads/Cotacao-${element.nome}.pdf`,'_blank')}
+        file.innerText="Arquivo para Assinatura"
+        file.className="buttonFile"
+        newDiv.appendChild(file)
+
+        const agree = document.createElement('button')
+        agree.innerText='Aprovar'
+        agree.className='buttonAprovar'
+        agree.style='text-align:center'
+
+        const id = element.id
+        const email = element.email
+        const nome = element.nome
+        const pa = element.PA
+        const setor = element.setor
+        const motivo = element.setor
+
+        agree.onclick = async function(){
+        const solicitacao = document.querySelector(`input[id='opt_res${id}']:checked`).value
+        const valor = document.querySelector(`input[id='opt_res${id}']`).value
+        alertinhaA("Aprovado")
+        await axios.post('http://127.0.0.1:5000/cotacao/pendencia/diretor',{
+            id:id,
+            nome:nome,
+            email:email,
+            PA:pa,
+            setor:setor,
+            motivo:motivo,
+            solicitacao:solicitacao,
+            valor:valor
+        })
+        window.location.href=`http://127.0.0.1:5000/file2/${id}`}
+        newDiv.appendChild(agree)
+
+        const dgree = document.createElement('button')
+        dgree.onclick=function(){alertinhaR("Reprovado")
+        window.location.href=`http://127.0.0.1:5000/pedido/reprovado/cotacao/diretoria/${element.id}`}
+        dgree.innerText="Reprovar"
+        dgree.className='buttonReprovar'
+        newDiv.appendChild(dgree)
+    })
+    const responseRem = await axios.get('http://127.0.0.1:5000/reembolso/pendencia/diretoria')
+    const pedidosRem = responseRem.data
+    pedidosRem.forEach(element => {
+
+        const newDivRem = document.createElement('div')
+        newDivRem.className = "divPedidos"
+
+        final.appendChild(newDivRem)
+
+        const varNomeRem = document.createElement('p')
+
+        newDivRem.appendChild(varNomeRem)
+        varNomeRem.innerHTML=`
+            <h3>ID: ${element.id}</h3>
+            <h4>Tipo: Reembolso</h4>
+            <p>Nome: ${element.nome}</p>
+            <p>Setor: ${element.setor}</p>
+            <p>PA: ${element.PA}</p>
+            <p>Motivo: ${element.motivo}</p>
+            <p>Descrição: ${element.descricao}</p>
+            <p>Destino: ${element.destino}</p>
+            <p>Valor: ${element.valor}</p>
+        `
+                const fileRem = document.createElement('button')
+                fileRem.onclick=function(){window.open(`http://127.0.0.1:5000/uploads/Reembolso-Nome-${element.nome}.pdf`,'_blank')}
+                fileRem.innerText="Arquivo para Assinatura"
+                fileRem.className="buttonFile"
+                newDivRem.appendChild(fileRem)
+
+                const agreeRem = document.createElement('button')
+                agreeRem.onclick=function(){alertinhaA("Aprovado")
+                window.location.href=`http://127.0.0.1:5000/pedido/reembolso/aprovado/diretor/${element.id}`}
+                agreeRem.innerText="Aprovar"
+                agreeRem.className="buttonAprovar"
+                newDivRem.appendChild(agreeRem)
+
+                const dgreeRem = document.createElement('button')
+                dgreeRem.onclick= function(){alertinhaR("Reprovado")
+                window.location.href=`http://127.0.0.1:5000/pedido/reprovado/reembolso/diretoria/${element.id}`}
+                dgreeRem.innerText="Reprovar"
+                dgreeRem.className='buttonReprovar'
+                newDivRem.appendChild(dgreeRem)
+    })
+    const responseSoli = await axios.get('http://127.0.0.1:5000/solicitacao/pendencias/diretoria')
+    const pedidosSoli = responseSoli.data
+
+    pedidosSoli.forEach(element => {
+
+        const newDivSoli = document.createElement('div')
+        newDivSoli.className = "divPedidos"
+
+        final.appendChild(newDivSoli)
+
+        const varNomeSoli = document.createElement('p')
+
+        newDivSoli.appendChild(varNomeSoli)
+
+        varNomeSoli.innerHTML=`
+            <h3>ID: ${element.id}</h3>
+            <h4>Tipo: Solicitação</h4>
+            <p>Nome: ${element.nome}</p>
+            <p>Setor: ${element.setor}</p>
+            <p>PA: ${element.PA}</p>
+            <p>Motivo: ${element.motivo}</p>
+            <p>Solicitação: ${element.solicitacao} Valor: ${element.valor}</p>
+        `
+                const fileSoli = document.createElement('button')
+                fileSoli.onclick=function(){window.open(`http://127.0.0.1:5000/uploads/Solicitacao-${element.nome}.pdf`,'_blank')}
+                fileSoli.innerText="Arquivo para Assinatura"
+                fileSoli.className="buttonFile"
+                newDivSoli.appendChild(fileSoli)
+
+                const agreeSoli = document.createElement('button')
+                agreeSoli.onclick=function(){alertinhaA("Aprovado")
+                window.location.href=`http://127.0.0.1:5000/pedido/solicitacao/aprovado/diretor/${element.id}`}
+                agreeSoli.innerText="Aprovar"
+                agreeSoli.className="buttonAprovar"
+                newDivSoli.appendChild(agreeSoli)
+
+                const dgreeSoli = document.createElement('button')
+                dgreeSoli.onclick=function(){alertinhaR("Reprovado")
+                window.location.href=`http://127.0.0.1:5000/pedido/reprovado/solicitacao/diretoria/${element.id}`}
+                dgreeSoli.innerText="Reprovar"
+                dgreeSoli.className='buttonReprovar'
+                newDivSoli.appendChild(dgreeSoli)
+    })
+}
+
+function alertinhaA(msg){
+    const divMessage= document.querySelector('.alert');
+
+    const message = document.createElement('div')
+    message.className='messageA'
+    message.innerText=msg
+    divMessage.appendChild(message)
+
+    setTimeout(()=>{
+        message.style.display='none'},3000)
+}
+function alertinhaR(msg){
+    const divMessage= document.querySelector('.alert');
+
+    const message = document.createElement('div')
+    message.className='messageR'
+    message.innerText=msg
+    divMessage.appendChild(message)
+
+    setTimeout(()=>{
+        message.style.display='none'},3000)
+}
+getPedidos()
+</script>
+</body>
+</html>
